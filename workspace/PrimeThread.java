@@ -33,6 +33,7 @@ Implement sections of the main method - 4 points
                     System.out.println("There are " + count + 
                             " primes between " + min + " and " + max);
                     sendBack(count);
+                    
                 }
             }
             
@@ -48,13 +49,16 @@ Implement sections of the main method - 4 points
              * you need to implement this!
              */
             private static int countPrimes(int min, int max) {
-                int current=min;
+                int current=max;
                 int count=0;
-                while(current<max){
+                while(current>=min){
                     if(isPrime(current)){
+                        System.out.println(current +" is prime");
                         count++;
                     }
+                    current--;
                 }
+                System.out.println("countPrimes finished");
                 return count;
             }
         
@@ -64,12 +68,15 @@ Implement sections of the main method - 4 points
              * You need to implement this!
              */
             private static boolean isPrime(int x) {
+                if(x==1 || x==0){
+                    return false;
+                }
                 for(int i=x-1;i>1;i--){
                     if(x%i==0){
                         return false;
                     }
                 }
-                
+
                 return true;
             }
         
@@ -95,32 +102,40 @@ Implement sections of the main method - 4 points
         //        System.out.println("Enter the number for which you wish to know how many primes are smaller than it: ");
         //        int max = reader.nextInt();
         //        System.out.println("Enter the number of threads you wish to use in your program");
-        int threads=2;
+                int threads=2;
         //        int threads = reader.nextInt();
                 
-                int max=50;
+                int max=1000;
                 
                 
                //Starting time
                Instant start = Instant.now();
                
                //comment the following line out once you've seen how this works.
-               new PrimeThread().test();
+               //new PrimeThread().test();
                
                
                //Write the code for spawning the desired number of CountPrimeThreads
                //be sure to divide the work among the specified number of threads efficiently. Use .join() to check to see if a thread is finished.
-
-                CountPrimesThread threadone=new CountPrimesThread(0, max/threads);
-                CountPrimesThread threadtwo=new CountPrimesThread(max/threads+1, max);
-                threadone.start();
-                threadtwo.start();
-                while(threadone.isAlive()){
-                    System.out.println("threadonerunning");
+               int c=0;// c for current 
+               CountPrimesThread[] threadsArr =new CountPrimesThread[threads];
+               for(int i=0;i<threads;i++){
+                    CountPrimesThread thread= new CountPrimesThread(c, (c+max/threads-i));
+                    c+=max/threads+1;
+                    threadsArr[i]=thread;
                 }
-
-
-
+                try{
+                    for(CountPrimesThread t : threadsArr){
+                        t.start();
+                    }
+                    
+                    for(CountPrimesThread t : threadsArr){
+                        t.join();
+                    }
+                }
+                catch(Exception e){
+                    System.out.println(e);
+                }
                 System.out.println("total: "+ total);
                //End time
                Instant end = Instant.now();
