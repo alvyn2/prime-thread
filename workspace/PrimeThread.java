@@ -53,7 +53,7 @@ Implement sections of the main method - 4 points
                 int count=0;
                 while(current>=min){
                     if(isPrime(current)){
-                        System.out.println(current +" is prime");
+                        //System.out.println(current +" is prime");
                         count++;
                     }
                     current--;
@@ -105,6 +105,8 @@ Implement sections of the main method - 4 points
                 //int threads=2;
                int threads = reader.nextInt();
                 
+
+               reader.close();
                // int max=1000;
                 
                 
