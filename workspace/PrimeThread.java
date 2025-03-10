@@ -97,11 +97,11 @@ Implement sections of the main method - 4 points
                 */
                 
                 
-                    //uncomment the following once you're ready to take user input for the number of threads and max value to test
+                    //uncomment the following once you're rady to take user input for the number of threads and max value to test
                 Scanner reader = new Scanner(System.in);  // Reading from System.in
-                System.out.println("Enter the number for which you wish to know how many primes are smaller than it: ");
+                System.out.println("Enter the number for hich you wish to know how many primes are smaller than it: ");
                 int max = reader.nextInt();
-                System.out.println("Enter the number of threads you wish to use in your program");
+                System.out.println("Enter the number of treads you wish to use in your program");
                 //int threads=2;
                int threads = reader.nextInt();
                 
@@ -134,6 +134,7 @@ Implement sections of the main method - 4 points
                     for(CountPrimesThread t : threadsArr){
                         t.join();
                     }
+
                 }
                 catch(Exception e){
                     System.out.println(e);
